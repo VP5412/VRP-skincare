@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Clinical Sanctuary - Skin Analysis</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-container": "#325547",
+              "surface-bright": "#f8fafb",
+              "outline": "#757c7e",
+              "on-tertiary-fixed": "#393a4e",
+              "tertiary": "#5c5d73",
+              "surface-container-low": "#f1f4f5",
+              "secondary-container": "#cdedfd",
+              "tertiary-fixed-dim": "#cdcde6",
+              "inverse-surface": "#0b0f10",
+              "on-background": "#2d3435",
+              "surface": "#f8fafb",
+              "on-primary-fixed": "#1f4235",
+              "surface-tint": "#426658",
+              "primary-fixed": "#bee6d3",
+              "surface-container-high": "#e4e9eb",
+              "outline-variant": "#acb3b5",
+              "on-tertiary-container": "#4c4d62",
+              "on-tertiary": "#fbf8ff",
+              "error": "#ac3434",
+              "secondary-dim": "#395764",
+              "on-secondary-fixed-variant": "#466370",
+              "on-secondary-container": "#3c5966",
+              "on-secondary-fixed": "#294753",
+              "surface-container": "#eaeef0",
+              "surface-container-lowest": "#ffffff",
+              "inverse-on-surface": "#9a9d9e",
+              "tertiary-fixed": "#dbdbf5",
+              "surface-variant": "#dde4e6",
+              "primary-fixed-dim": "#b0d7c5",
+              "primary": "#426658",
+              "surface-container-highest": "#dde4e6",
+              "on-secondary": "#f2faff",
+              "tertiary-dim": "#505167",
+              "secondary-fixed": "#cdedfd",
+              "primary-container": "#bee6d3",
+              "error-container": "#f56965",
+              "on-primary": "#e5fff1",
+              "on-surface": "#2d3435",
+              "surface-dim": "#d4dbde",
+              "secondary": "#466370",
+              "tertiary-container": "#dbdbf5",
+              "on-error-container": "#65000b",
+              "primary-dim": "#365a4c",
+              "on-tertiary-fixed-variant": "#55566c",
+              "on-primary-fixed-variant": "#3b5f51",
+              "error-dim": "#70030f",
+              "inverse-primary": "#d2fae7",
+              "secondary-fixed-dim": "#bfdfee",
+              "background": "#f8fafb",
+              "on-surface-variant": "#596062",
+              "on-error": "#fff7f6"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-[#f8fafb] dark:bg-slate-900">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#6B9080] dark:text-[#bee6d3]">menu_open</span>
+<span class="text-[#426658] dark:text-[#bee6d3] font-manrope font-extrabold italic text-xl tracking-tight">The Clinical Sanctuary</span>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container">
+<img alt="Profile" data-alt="Close up portrait of a smiling woman with clean glowing skin and natural makeup in soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVxzB5b46KfcjFz0xiGjlp36DCTKKkJFde8ZeKe2RW0JJ5rdzxbXMac8a2-euLCIkGmyjx_GICnlQVMSxLis-rs95urj98M8h-lo1RIZMll2u6KJcrdyZmlSgzntZbLIAl748jXFx3E96eaYGMAZRrjuCbDL23WHOKFfM8Nqhd9UFZwFjkUey_JnbCRc85Je77hf73nleU2cdAgYCDHSemlynfF5-b-lVVPtaoPkjTkw_97QUBZpsCEmS_cKR4JFCUEbdPsfX-gok7"/>
+</div>
+</header>
+<main class="pt-20 px-4 space-y-8 max-w-md mx-auto">
+<!-- Hero Analysis Section -->
+<section class="relative">
+<div class="relative rounded-xl overflow-hidden aspect-[4/5] shadow-lg group">
+<img alt="AI Skin Analysis" class="w-full h-full object-cover" data-alt="High resolution close-up of a young woman's face showing skin texture with neutral clinical studio lighting and soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzGWptBanU4oNrf3hyfLmw8XpWoVEn0INoMeQBQhW7eU6w9CKOYmsfMsZ2Xi2TFT4AXv27uuHxtEblUOaFNthlBxZHZMheZDkgS1-AOfSIATgnBa4uAXy_UTNAsbFuUdasZYgfRyUT_rBy_htnnLKKUou3UuBzczoy19ASW1pxhmKAWHDkBeMWEqtqChhxIS04mtJFUZzLnEdKif6uD5YeirCCxPFQ04twJjVPo3mtdTvqrU5TsBSN1AF2RMqy79e_K5zjY98OlZP4"/>
+<!-- AI Overlay Dots & Labels -->
+<div class="absolute inset-0 bg-primary/5"></div>
+<!-- Indicator: Dryness -->
+<div class="absolute top-[45%] left-[25%] flex flex-col items-center">
+<div class="w-4 h-4 rounded-full bg-primary shadow-[0_0_12px_#426658] animate-pulse"></div>
+<div class="mt-2 bg-surface-container-lowest/80 backdrop-blur-md px-3 py-1 rounded-full">
+<span class="text-[10px] font-bold tracking-widest text-primary uppercase">dryness</span>
+</div>
+</div>
+<!-- Indicator: Dark Circles -->
+<div class="absolute top-[38%] left-[55%] flex flex-col items-center">
+<div class="w-4 h-4 rounded-full bg-secondary shadow-[0_0_12px_#466370] animate-pulse"></div>
+<div class="mt-2 bg-surface-container-lowest/80 backdrop-blur-md px-3 py-1 rounded-full">
+<span class="text-[10px] font-bold tracking-widest text-secondary uppercase">dark circles</span>
+</div>
+</div>
+<!-- Indicator: Acne -->
+<div class="absolute top-[65%] left-[60%] flex flex-col items-center">
+<div class="w-4 h-4 rounded-full bg-tertiary shadow-[0_0_12px_#5c5d73] animate-pulse"></div>
+<div class="mt-2 bg-surface-container-lowest/80 backdrop-blur-md px-3 py-1 rounded-full">
+<span class="text-[10px] font-bold tracking-widest text-tertiary uppercase">pore texture</span>
+</div>
+</div>
+<!-- AI Scanning Line Effect (Decorative) -->
+<div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent blur-sm"></div>
+</div>
+<!-- Skin Health Score Card -->
+<div class="absolute -bottom-6 left-6 right-6 bg-surface-container-lowest rounded-lg p-5 shadow-[0_12px_32px_rgba(45,52,53,0.06)] flex justify-between items-center">
+<div>
+<p class="text-[10px] font-bold tracking-widest text-on-surface-variant uppercase mb-1">Skin Vitality Index</p>
+<h2 class="text-3xl font-extrabold text-on-surface">84<span class="text-lg font-normal text-on-surface-variant">/100</span></h2>
+</div>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm font-semibold">Healthy Flow</span>
+</div>
+</div>
+</section>
+<!-- Insights Grid -->
+<section class="pt-8 space-y-4">
+<h3 class="text-xl font-bold px-2">Clinical Insights</h3>
+<div class="grid gap-4">
+<!-- Dryness Card -->
+<div class="bg-surface-container-low p-5 rounded-lg border-l-4 border-primary/20 flex gap-4 items-start">
+<div class="p-3 bg-primary-container rounded-full text-primary">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-on-surface mb-1">Localized Dehydration</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Lower cheek area shows 12% reduced moisture retention compared to your baseline. Recommend hyaluronic acid integration.</p>
+</div>
+</div>
+<!-- Dark Circles Card -->
+<div class="bg-surface-container-low p-5 rounded-lg border-l-4 border-secondary/20 flex gap-4 items-start">
+<div class="p-3 bg-secondary-container rounded-full text-secondary">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-on-surface mb-1">Vascular Congestion</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Minor pigmentation detected in the periocular region, likely due to sleep-cycle variance and micro-circulation slowdown.</p>
+</div>
+</div>
+<!-- AI Advice Glass Card -->
+<div class="relative overflow-hidden bg-primary p-6 rounded-lg text-on-primary">
+<div class="absolute top-0 right-0 p-4 opacity-20">
+<span class="material-symbols-outlined text-6xl">auto_awesome</span>
+</div>
+<h4 class="font-bold text-lg mb-2">AI Expert Recommendation</h4>
+<p class="text-sm opacity-90 leading-relaxed mb-6">Your skin is responding well to Vitamin C, but the current lipid barrier needs reinforcement before the winter transition.</p>
+<button class="w-full py-4 bg-primary-container text-on-primary-container font-bold rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all duration-200">
+                        Generate My Routine
+                    </button>
+</div>
+</div>
+</section>
+<!-- Comparison Strip -->
+<section class="space-y-4 pb-12">
+<h3 class="text-xl font-bold px-2">Historical Progress</h3>
+<div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+<div class="flex-none w-40 bg-surface-container-lowest rounded-lg overflow-hidden p-2">
+<div class="aspect-square rounded-md mb-2 overflow-hidden">
+<img alt="Last Week" data-alt="Close up skin texture showing slightly enlarged pores and redness under clinical soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3UazI07mqXCORgaI55BmuyLaqI9ymF_sZ3rJdblkqSDW42qqKbdU9mjAdCg3Ev0hjd_cTgsqGWHp5vcrFrgnbH3sibbOIAwrM9CaH6tj2uEYHHm0o7mhRSviWfLbt1hzBdGofmZLzWCf2Wmg_L49GpD9SYWz_9vtrT0BljwjsPDsJYd264ruDReCUF-ptkt_BHHfDZcLEAK85QKrsUA4fzGVkxmPYqPegVIcvsD3PW0k1oxsFDvXsTqbJ8_cIqiFU92QskypmxlMY"/>
+</div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase text-center">Last Week (78)</p>
+</div>
+<div class="flex-none w-40 bg-surface-container-lowest rounded-lg overflow-hidden p-2">
+<div class="aspect-square rounded-md mb-2 overflow-hidden">
+<img alt="Last Month" data-alt="Macro photography of clean healthy skin with soft focus background and natural highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJSYWQ5oWTzGF9vnHG3aRqhMAeXlNnXZ0ySXiyl_HcHS86pdZ5ggI_VPKftmDzhtBzVQ-H_zfYQWgKJ1u-1cpdpCjmR9RTruPJHP7cXV86n-H2Mc6uDRelHPJ9TlfDHe4ukgL51KUcIDBD9FswT9WZ4c2UgZCr0NDMubZpNRmcSKz8qSIvuYdlV-tzf-F9if8j74KDMRD5DfCy4J0E_Zt5Oh_GhO4m4EXfhSz4nopo1PIRGBZwtz43YPireqJblt1qJ-QHtGHU9XvX"/>
+</div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase text-center">Last Month (72)</p>
+</div>
+<div class="flex-none w-40 bg-surface-container-lowest rounded-lg overflow-hidden p-2 opacity-50">
+<div class="aspect-square rounded-md mb-2 bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-outline">add_a_photo</span>
+</div>
+<p class="text-[10px] font-bold text-outline uppercase text-center">Baseline</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#ffffff]/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-[#acb3b5]/15 shadow-[0_-12px_32px_rgba(45,52,53,0.06)] rounded-t-[24px]">
+<div class="flex flex-col items-center justify-center text-[#596062] dark:text-slate-400 px-5 py-1.5 hover:text-[#426658] dark:hover:text-[#bee6d3] transition-colors">
+<span class="material-symbols-outlined mb-1">home_health</span>
+<span class="font-manrope font-medium text-[10px] uppercase tracking-wider">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#bee6d3] dark:bg-[#426658] text-[#426658] dark:text-[#bee6d3] rounded-full px-5 py-1.5 transition-all active:scale-90 duration-300 ease-out">
+<span class="material-symbols-outlined mb-1">auto_awesome</span>
+<span class="font-manrope font-medium text-[10px] uppercase tracking-wider">Chat</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#596062] dark:text-slate-400 px-5 py-1.5 hover:text-[#426658] dark:hover:text-[#bee6d3] transition-colors">
+<span class="material-symbols-outlined mb-1">insights</span>
+<span class="font-manrope font-medium text-[10px] uppercase tracking-wider">Progress</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#596062] dark:text-slate-400 px-5 py-1.5 hover:text-[#426658] dark:hover:text-[#bee6d3] transition-colors">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-manrope font-medium text-[10px] uppercase tracking-wider">Profile</span>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Clinical Sanctuary - AI Face Scan</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-primary-container": "#325547",
+            "surface-bright": "#f8fafb",
+            "outline": "#757c7e",
+            "on-tertiary-fixed": "#393a4e",
+            "tertiary": "#5c5d73",
+            "surface-container-low": "#f1f4f5",
+            "secondary-container": "#cdedfd",
+            "tertiary-fixed-dim": "#cdcde6",
+            "inverse-surface": "#0b0f10",
+            "on-background": "#2d3435",
+            "surface": "#f8fafb",
+            "on-primary-fixed": "#1f4235",
+            "surface-tint": "#426658",
+            "primary-fixed": "#bee6d3",
+            "surface-container-high": "#e4e9eb",
+            "outline-variant": "#acb3b5",
+            "on-tertiary-container": "#4c4d62",
+            "on-tertiary": "#fbf8ff",
+            "error": "#ac3434",
+            "secondary-dim": "#395764",
+            "on-secondary-fixed-variant": "#466370",
+            "on-secondary-container": "#3c5966",
+            "on-secondary-fixed": "#294753",
+            "surface-container": "#eaeef0",
+            "surface-container-lowest": "#ffffff",
+            "inverse-on-surface": "#9a9d9e",
+            "tertiary-fixed": "#dbdbf5",
+            "surface-variant": "#dde4e6",
+            "primary-fixed-dim": "#b0d7c5",
+            "primary": "#426658",
+            "surface-container-highest": "#dde4e6",
+            "on-secondary": "#f2faff",
+            "tertiary-dim": "#505167",
+            "secondary-fixed": "#cdedfd",
+            "primary-container": "#bee6d3",
+            "error-container": "#f56965",
+            "on-primary": "#e5fff1",
+            "on-surface": "#2d3435",
+            "surface-dim": "#d4dbde",
+            "secondary": "#466370",
+            "tertiary-container": "#dbdbf5",
+            "on-error-container": "#65000b",
+            "primary-dim": "#365a4c",
+            "on-tertiary-fixed-variant": "#55566c",
+            "on-primary-fixed-variant": "#3b5f51",
+            "error-dim": "#70030f",
+            "inverse-primary": "#d2fae7",
+            "secondary-fixed-dim": "#bfdfee",
+            "background": "#f8fafb",
+            "on-surface-variant": "#596062",
+            "on-error": "#fff7f6"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .face-mesh-glow {
+      background-image: radial-gradient(circle at center, rgba(190, 230, 211, 0.15) 0%, transparent 70%);
+    }
+    .scanner-line {
+      background: linear-gradient(180deg, transparent 0%, #bee6d3 50%, transparent 100%);
+      height: 2px;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      animation: scan 3s ease-in-out infinite;
+    }
+    @keyframes scan {
+      0%, 100% { top: 15%; opacity: 0; }
+      20%, 80% { opacity: 1; }
+      50% { top: 85%; }
+    }
+    .tracking-dot {
+      width: 4px;
+      height: 4px;
+      background-color: #bee6d3;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #bee6d3;
+      position: absolute;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen overflow-hidden">
+<!-- Top Navigation Shell - High-Tech Overlay Style -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-transparent">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="flex flex-col items-center">
+<span class="text-white/60 font-label text-[10px] uppercase tracking-[0.2em]">Skin Analysis</span>
+<h1 class="text-white font-headline font-bold text-lg tracking-tight">AI Diagnostic</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 transition-colors">
+<span class="material-symbols-outlined">flash_on</span>
+</button>
+</header>
+<!-- Main Camera Viewport -->
+<main class="relative w-full h-screen bg-black overflow-hidden">
+<!-- Simulated Camera Feed Background -->
+<div class="absolute inset-0 z-0">
+<img alt="Face Scanning Viewport" class="w-full h-full object-cover opacity-80" data-alt="Close up portrait of a person with clean skin looking into the camera with soft studio lighting and a neutral grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV1Kvtf0RbhVtd4U022eMx4vfGlre9XpNLnClfaRN0rXDlsN2xtVpoabZ2f6iCneRJ-8PESmg6nQA7Z86ckeoXiP8GD5NfhOAk-7nMO4cyaywoZVrMBGh-56fqVGFVYm4cYagfwfrveSJA8ZT6wZiMKGLUrCLtw8yFm8jFhx0yZZfNFFa6Lml4K4LJ6FII2C3ZKzfxpN8tFWxCzU_lWw_KKBWykwQmgT5cXaGYuTzaV5FSowh2tvtNOyhPO0b7r6jtNnakqTZUlTWI"/>
+</div>
+<!-- AI Scanning Overlays -->
+<div class="absolute inset-0 z-10 pointer-events-none">
+<!-- Vignette/Frame -->
+<div class="absolute inset-0 border-[32px] border-black/20 backdrop-blur-[1px]"></div>
+<!-- Central Scanning Frame -->
+<div class="absolute inset-x-12 top-1/2 -translate-y-1/2 aspect-[3/4] border border-white/20 rounded-[3rem] overflow-hidden">
+<!-- Glow Aura -->
+<div class="absolute inset-0 face-mesh-glow"></div>
+<!-- Animated Scanner Line -->
+<div class="scanner-line"></div>
+<!-- High-Tech Corners -->
+<div class="absolute top-8 left-8 w-8 h-8 border-t-2 border-l-2 border-primary-container rounded-tl-lg"></div>
+<div class="absolute top-8 right-8 w-8 h-8 border-t-2 border-r-2 border-primary-container rounded-tr-lg"></div>
+<div class="absolute bottom-8 left-8 w-8 h-8 border-b-2 border-l-2 border-primary-container rounded-bl-lg"></div>
+<div class="absolute bottom-8 right-8 w-8 h-8 border-b-2 border-r-2 border-primary-container rounded-br-lg"></div>
+<!-- Tracking Dots Matrix -->
+<div class="tracking-dot" style="top: 30%; left: 45%;"></div>
+<div class="tracking-dot" style="top: 32%; left: 55%;"></div>
+<div class="tracking-dot" style="top: 45%; left: 35%;"></div>
+<div class="tracking-dot" style="top: 45%; left: 65%;"></div>
+<div class="tracking-dot" style="top: 55%; left: 50%;"></div>
+<div class="tracking-dot" style="top: 70%; left: 40%;"></div>
+<div class="tracking-dot" style="top: 70%; left: 60%;"></div>
+<!-- Subtle Grid Pattern Overlay -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px); background-size: 40px 40px;"></div>
+</div>
+</div>
+<!-- Bottom Controls -->
+<section class="fixed bottom-0 left-0 w-full z-30 px-8 pb-12 pt-20 bg-gradient-to-t from-black/80 to-transparent">
+<!-- Status Text -->
+<div class="flex flex-col items-center mb-10">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-1.5 h-1.5 bg-primary-container rounded-full animate-pulse"></div>
+<p class="text-white font-label text-xs uppercase tracking-widest">Scanning for impurities...</p>
+</div>
+<p class="text-white/60 text-sm font-body text-center max-w-xs">
+          Align your face within the frame and hold steady for a clinical-grade skin analysis.
+        </p>
+</div>
+<!-- Capture Controls -->
+<div class="flex items-center justify-between max-w-sm mx-auto">
+<!-- Gallery Preview -->
+<div class="w-12 h-12 rounded-full border-2 border-white/20 overflow-hidden bg-surface-container-low">
+<img alt="Previous scan" class="w-full h-full object-cover" data-alt="Small thumbnail profile photo of a person's face showing skin texture detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlaWhBEt7oPF9dNYVlPSFqJ-67aGWFOz5m369T6NoqjhMMGGwJlZIBoGjbf8XHAb_NaywH2cH_MCPUMCugGFUO1X7TReHnebgZO5eFaX0r1YqnPM9g2WU_ROFvEWAG0FV29HbCWp2BnALKuMpsE0zeToHuTex8kYX-h92k8HtQPx1xPkXXPY-2AjWg74C3V4iZY-Y9lFSHAo8tvnMib_1Erzlq3x0vsRBjrhxJGCQIewTV3m48DF8GBPxZkO00o60isSS2vlry1I2B"/>
+</div>
+<!-- Main Shutter Button -->
+<button class="relative group">
+<div class="absolute inset-0 bg-primary-container blur-xl opacity-20 group-active:opacity-40 transition-opacity"></div>
+<div class="relative w-20 h-20 rounded-full border-4 border-white flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-white scale-90 group-active:scale-100 transition-transform flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+</div>
+</button>
+<!-- Lens Switch -->
+<button class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white">
+<span class="material-symbols-outlined">flip_camera_ios</span>
+</button>
+</div>
+</section>
+<!-- Floating Analysis Stats (Asymmetric Layout) -->
+<div class="absolute top-24 left-6 z-20 space-y-4">
+<div class="bg-black/30 backdrop-blur-xl p-4 rounded-lg border-l-2 border-primary-container max-w-[140px]">
+<span class="text-white/40 text-[10px] block font-label uppercase">Hydration</span>
+<span class="text-primary-container font-headline font-bold text-lg">78%</span>
+</div>
+<div class="bg-black/30 backdrop-blur-xl p-4 rounded-lg border-l-2 border-secondary-container max-w-[140px]">
+<span class="text-white/40 text-[10px] block font-label uppercase">Elasticity</span>
+<span class="text-secondary-container font-headline font-bold text-lg">Good</span>
+</div>
+</div>
+<!-- AI Magic Glow (Right side) -->
+<div class="absolute top-32 right-[-20px] z-20 opacity-40">
+<div class="w-40 h-40 bg-primary rounded-full blur-[80px]"></div>
+</div>
+</main>
+<!-- Bottom Navigation Shell (Suppressed for transactional camera screen per rule) -->
+<!-- Note: This page is task-focused camera UI, so we only show the camera-specific shell -->
+</body></html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Skincare Face Scanner</title>
+    <!-- Import Google MediaPipe Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+    <!-- ADDED: Drawing Utils to draw the geometric lines -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .scanner-container { position: relative; width: 400px; height: 400px; }
+        /* The circular Face ID style cutout */
+        .video-wrapper { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; border: 5px solid #333; transition: border-color 0.3s; position: relative; }
+        .video-wrapper.success { border-color: #00ff00; box-shadow: 0 0 20px #00ff00; }
+        
+        /* Ensure canvas draws exactly over the video */
+        video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); pointer-events: none; }
+        
+        .instructions { font-size: 24px; font-weight: bold; margin-top: 20px; text-align: center; height: 60px; }
+        .progress-container { display: flex; gap: 10px; margin-top: 20px; }
+        .dot { width: 15px; height: 15px; border-radius: 50%; background-color: #555; }
+        .dot.active { background-color: #00ff00; }
+        
+        #results-container { display: none; margin-top: 20px; text-align: center; }
+        .preview-img { width: 100px; height: 100px; border-radius: 10px; margin: 0 10px; object-fit: cover; border: 2px solid white; }
+    </style>
+</head>
+<body>
+
+    <h1>AI Face Scan</h1>
+    
+    <div class="scanner-container">
+        <div class="video-wrapper" id="video-wrapper">
+            <video id="webcam" autoplay playsinline></video>
+            <!-- Canvas is where the geometric mesh will be drawn -->
+            <canvas id="overlay"></canvas>
+        </div>
+    </div>
+
+    <div class="instructions" id="instructions">Please look straight ahead.</div>
+    
+    <div class="progress-container">
+        <div class="dot" id="dot-center"></div>
+        <div class="dot" id="dot-right"></div>
+        <div class="dot" id="dot-left"></div>
+    </div>
+
+    <div id="results-container">
+        <h3>Scan Complete! Ready for AI Analysis.</h3>
+        <div id="images-preview"></div>
+    </div>
+
+    <script>
+        const videoElement = document.getElementById('webcam');
+        const overlayCanvas = document.getElementById('overlay');
+        const overlayCtx = overlayCanvas.getContext('2d');
+        const instructions = document.getElementById('instructions');
+        const wrapper = document.getElementById('video-wrapper');
+        const resultsContainer = document.getElementById('results-container');
+        
+        // --- ADDED: We need to know which user this is for! ---
+        // For testing, we are hardcoding user_id 1. Make sure you created a user in /docs first!
+        const TEST_USER_ID = 3; 
+
+        let currentPhase = "CENTER"; 
+        let capturedImages = {};
+        let holdTimer = 0;
+
+        const faceMesh = new FaceMesh({locateFile: (file) => {
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+        }});
+        
+        faceMesh.setOptions({ maxNumFaces: 1, refineLandmarks: true, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
+        faceMesh.onResults(onResults);
+
+        const camera = new Camera(videoElement, {
+            onFrame: async () => { await faceMesh.send({image: videoElement}); },
+            width: 640, height: 480
+        });
+        camera.start();
+
+        function onResults(results) {
+            if (currentPhase === "DONE") return;
+
+            if (overlayCanvas.width !== videoElement.videoWidth) {
+                overlayCanvas.width = videoElement.videoWidth;
+                overlayCanvas.height = videoElement.videoHeight;
+            }
+
+            overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+
+            if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
+                const landmarks = results.multiFaceLandmarks[0];
+                
+                drawConnectors(overlayCtx, landmarks, FACEMESH_TESSELATION, {color: '#C0C0C070', lineWidth: 1});
+                drawConnectors(overlayCtx, landmarks, FACEMESH_FACE_OVAL, {color: '#FFFFFF', lineWidth: 2});
+
+                const nose = landmarks[1];
+                const leftSide = landmarks[234]; 
+                const rightSide = landmarks[454]; 
+
+                const leftDist = nose.x - leftSide.x;
+                const rightDist = rightSide.x - nose.x;
+                const ratio = leftDist / rightDist;
+
+                checkRotation(ratio);
+            } else {
+                instructions.innerText = "Face not detected. Bring face into frame.";
+                resetHold();
+            }
+        }
+
+        function checkRotation(ratio) {
+            let isLookingCorrectly = false;
+            if (currentPhase === "CENTER") {
+                if (ratio > 0.8 && ratio < 1.2) isLookingCorrectly = true;
+            } else if (currentPhase === "RIGHT") {
+                if (ratio > 2.0) isLookingCorrectly = true; 
+            } else if (currentPhase === "LEFT") {
+                if (ratio < 0.5) isLookingCorrectly = true; 
+            }
+
+            if (isLookingCorrectly) {
+                holdTimer++;
+                wrapper.classList.add("success");
+                instructions.innerText = `Hold still... (${Math.floor(holdTimer/10)})`;
+                if (holdTimer > 20) takePicture();
+            } else {
+                resetHold();
+                if (currentPhase === "CENTER") instructions.innerText = "Please look straight ahead.";
+                if (currentPhase === "RIGHT") instructions.innerText = "Slowly turn your head to your RIGHT.";
+                if (currentPhase === "LEFT") instructions.innerText = "Now slowly turn your head to your LEFT.";
+            }
+        }
+
+        function resetHold() {
+            holdTimer = 0;
+            wrapper.classList.remove("success");
+        }
+
+        function takePicture() {
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = videoElement.videoWidth;
+            tempCanvas.height = videoElement.videoHeight;
+            const ctx = tempCanvas.getContext('2d');
+            
+            ctx.translate(tempCanvas.width, 0);
+            ctx.scale(-1, 1);
+            ctx.drawImage(videoElement, 0, 0);
+            
+            const imgData = tempCanvas.toDataURL('image/jpeg');
+            capturedImages[currentPhase] = imgData;
+
+            resetHold();
+            if (currentPhase === "CENTER") {
+                document.getElementById('dot-center').classList.add('active');
+                currentPhase = "RIGHT";
+            } else if (currentPhase === "RIGHT") {
+                document.getElementById('dot-right').classList.add('active');
+                currentPhase = "LEFT";
+            } else if (currentPhase === "LEFT") {
+                document.getElementById('dot-left').classList.add('active');
+                currentPhase = "DONE";
+                finishScan();
+            }
+        }
+
+        // --- Helper Function: Convert Base64 string to a real File object ---
+        function dataURLtoFile(dataurl, filename) {
+            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, {type:mime});
+        }
+
+        // --- UPDATED: Send the images to your Python Backend! ---
+        async function finishScan() {
+            camera.stop();
+            overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+            wrapper.style.display = "none";
+            resultsContainer.style.display = "block";
+            
+            instructions.innerText = "Uploading to AI... Please wait.";
+
+            // 1. Show the captured images on screen
+            const previewDiv = document.getElementById('images-preview');
+            Object.keys(capturedImages).forEach(key => {
+                const img = document.createElement('img');
+                img.src = capturedImages[key];
+                img.className = "preview-img";
+                previewDiv.appendChild(img);
+            });
+
+            // 2. Prepare the data to send to FastAPI
+            const formData = new FormData();
+            formData.append("user_id", TEST_USER_ID); // Hardcoded user ID 1
+
+            // Convert our 3 base64 pictures into actual files and attach them
+            formData.append("files", dataURLtoFile(capturedImages["CENTER"], "center.jpg"));
+            formData.append("files", dataURLtoFile(capturedImages["LEFT"], "left.jpg"));
+            formData.append("files", dataURLtoFile(capturedImages["RIGHT"], "right.jpg"));
+
+            try {
+                // 3. Send the HTTP POST request to your local Python server
+                const response = await fetch("http://127.0.0.1:8000/api/scan", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server Error: ${response.status}`);
+                }
+
+                // 4. Get the exact JSON back from Gemini!
+                const aiData = await response.json();
+                
+                instructions.innerText = "Analysis Complete!";
+                
+                // Print the JSON to the browser console so you can see it
+                console.log("AI RESPONSE FROM BACKEND:", aiData);
+                
+                // Add a simple display to the HTML
+                const resultText = document.createElement('p');
+                resultText.style.textAlign = "left";
+                resultText.style.padding = "20px";
+                resultText.innerHTML = `
+                    <strong>Description:</strong> ${aiData.description} <br><br>
+                    <strong>Recommended Products:</strong> ${aiData.products.length} found <br>
+                    <em>(Open Developer Console (F12) to see the full JSON data!)</em>
+                `;
+                resultsContainer.appendChild(resultText);
+
+            } catch (error) {
+                console.error("Error connecting to backend:", error);
+                instructions.innerText = "Error analyzing images. Is your Python server running?";
+            }
+        }
+    </script>
+</body>
+</html>
