@@ -6,6 +6,8 @@
 ![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=google&logoColor=white)
 ![MediaPipe](https://img.shields.io/badge/MediaPipe-00B4D8?style=for-the-badge&logo=google&logoColor=white)
 
+Try : vedpatel.tech/projects/VRP-skincare
+
 An advanced, full-stack health-tech application that acts as a virtual dermatologist. It utilizes **Google MediaPipe** for real-time 3D facial geometric scanning and **Google Gemini 2.5 Flash** for multimodal visual analysis. 
 
 The system provides users with personalized, budget-friendly skincare routines, tracks their progress chronologically in a MySQL database, and maintains an AI "memory" of past clinical notes to evaluate routine effectiveness over time.
